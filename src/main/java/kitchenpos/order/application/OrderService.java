@@ -66,7 +66,7 @@ public class OrderService {
                 throw new IllegalArgumentException();
             }
             final OrderLineItem orderLineItem = new OrderLineItem();
-            orderLineItem.setMenu(menu);
+            orderLineItem.setMenuId(menu.getId());
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);
         }
@@ -104,7 +104,9 @@ public class OrderService {
         if (order.getType() == OrderType.DELIVERY) {
             BigDecimal sum = BigDecimal.ZERO;
             for (final OrderLineItem orderLineItem : order.getOrderLineItems()) {
-                sum = orderLineItem.getMenu()
+                final Menu menu = menuRepository.findById(orderLineItem.getMenuId())
+                        .orElseThrow(NoSuchElementException::new);
+                sum = menu
                     .getPrice()
                     .multiply(BigDecimal.valueOf(orderLineItem.getQuantity()));
             }

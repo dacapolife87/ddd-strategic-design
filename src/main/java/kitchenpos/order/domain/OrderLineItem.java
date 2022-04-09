@@ -1,7 +1,5 @@
 package kitchenpos.order.domain;
 
-import kitchenpos.menu.domain.Menu;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -14,19 +12,10 @@ public class OrderLineItem {
     @Id
     private Long seq;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(
-        name = "menu_id",
-        columnDefinition = "varbinary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
-    )
-    private Menu menu;
+    private UUID menuId;
 
     @Column(name = "quantity", nullable = false)
     private long quantity;
-
-    @Transient
-    private UUID menuId;
 
     @Transient
     private BigDecimal price;
@@ -40,14 +29,6 @@ public class OrderLineItem {
 
     public void setSeq(final Long seq) {
         this.seq = seq;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(final Menu menu) {
-        this.menu = menu;
     }
 
     public long getQuantity() {

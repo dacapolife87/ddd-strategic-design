@@ -96,7 +96,7 @@ public class Fixtures {
     public static OrderLineItem orderLineItem() {
         final OrderLineItem orderLineItem = new OrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
-        orderLineItem.setMenu(menu());
+        orderLineItem.setMenuId(menu().getId());
         return orderLineItem;
     }
 
